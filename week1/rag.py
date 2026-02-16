@@ -36,8 +36,12 @@ QUESTION = (
 )
 
 
-# TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+1. Answer the user's request using ONLY the information provided in the Context.
+2. Do not use external knowledge or hallucinate APIs that are not in the Context.
+3. If the Context is insufficient, state that you cannot answer.
+4. Output strict Python code as requested.
+"""
 
 
 # For this simple example
@@ -52,11 +56,11 @@ REQUIRED_SNIPPETS = [
 
 
 def YOUR_CONTEXT_PROVIDER(corpus: List[str]) -> List[str]:
-    """TODO: Select and return the relevant subset of documents from CORPUS for this task.
+    """Select and return the relevant subset of documents from CORPUS for this task.
 
     For example, return [] to simulate missing context, or [corpus[0]] to include the API docs.
     """
-    return []
+    return corpus
 
 
 def make_user_prompt(question: str, context_docs: List[str]) -> str:

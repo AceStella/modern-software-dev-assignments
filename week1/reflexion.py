@@ -14,8 +14,23 @@ the function is_valid_password(password: str) -> bool. No prose or comments.
 Keep the implementation minimal.
 """
 
-# TODO: Fill this in!
-YOUR_REFLEXION_PROMPT = ""
+YOUR_REFLEXION_PROMPT = """
+You are a meticulous Python coding assistant.
+Your task is to fix the `is_valid_password` function to pass ALL tests.
+
+SYSTEMATIC PROCESS (Follow strictly):
+1. Audit Existing Logic: Look at the `BROKEN CODE`. List what checks it ALREADY performs (e.g., length, digits, etc.).
+   - *Self-Correction*: You MUST preserve these existing checks in the new version.
+2. Analyze Failures: Look at the `FAILURE REPORT`. List what checks are MISSING (e.g., uppercase, special chars).
+3. Create Final Checklist: Combine (1) and (2). The final function MUST implement ALL items in this checklist.
+4. Implementation: Write the code. Use explicit `any(...)` checks for each condition.
+
+Special Note: 
+- `isalpha()` is NOT enough for case sensitivity. Use `.islower()` AND `.isupper()`.
+- For special characters, check if the character is in the string "!@#$%^&*()-_".
+
+Output the reasoning process first, then the final code block.
+"""
 
 
 # Ground-truth test suite used to evaluate generated code
@@ -92,11 +107,19 @@ def generate_initial_function(system_prompt: str) -> str:
 
 
 def your_build_reflexion_context(prev_code: str, failures: List[str]) -> str:
-    """TODO: Build the user message for the reflexion step using prev_code and failures.
+    failure_log = "\n".join(f"[Error]: {f}" for f in failures)
+    return f"""
+The following code has bugs and failed unit tests.
 
-    Return a string that will be sent as the user content alongside the reflexion system prompt.
-    """
-    return ""
+--- FAILURE REPORT ---
+{failure_log}
+----------------------
+
+--- BROKEN CODE ---
+```python
+{prev_code}
+Task: Rewrite the function is_valid_password to fix the errors listed in the FAILURE REPORT.
+"""
 
 
 def apply_reflexion(

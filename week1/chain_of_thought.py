@@ -7,8 +7,17 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-# TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+#The first time I tried it passed.
+YOUR_SYSTEM_PROMPT = """
+To solve large exponent modulo problems, do not calculate the full number. Instead, follow these steps:
+
+1. Calculate 3^1, 3^2, 3^3... mod 100 one by one.
+2. Look for a pattern or a cycle in the results.
+3. Once you find the cycle length (let's call it P), use it to reduce the exponent: 12345 mod P.
+4. Calculate the final result based on the reduced exponent.
+
+Think step by step. Output the reasoning process first, and strictly end with "Answer: <number>".
+"""
 
 
 USER_PROMPT = """
